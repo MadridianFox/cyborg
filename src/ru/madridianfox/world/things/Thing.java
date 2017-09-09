@@ -1,5 +1,7 @@
 package ru.madridianfox.world.things;
 
+import ru.madridianfox.gui.DrawableSimple;
+import ru.madridianfox.gui.DrawableThing;
 import ru.madridianfox.world.CellInterface;
 
 public abstract class Thing {
@@ -23,5 +25,12 @@ public abstract class Thing {
      */
     public void setCell(CellInterface cell){
         cell.setThing(this);
+    }
+
+    /**
+     * @return объект, который знает как рисовать этот экземпеляр вещи
+     */
+    public DrawableThing drawable(){
+        return new DrawableSimple(color());
     }
 }

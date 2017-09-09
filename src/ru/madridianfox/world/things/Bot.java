@@ -3,6 +3,8 @@ package ru.madridianfox.world.things;
 import ru.madridianfox.ai.Mind;
 import ru.madridianfox.ai.sensors.EyeSensor;
 import ru.madridianfox.ai.sensors.Sensor;
+import ru.madridianfox.gui.DrawableBot;
+import ru.madridianfox.gui.DrawableThing;
 import ru.madridianfox.world.CellInterface;
 import ru.madridianfox.world.Sides;
 import ru.madridianfox.world.Turn;
@@ -92,5 +94,10 @@ public class Bot extends Thing {
             cell = cell.cellByDirection(dir);
         }
         return cell;
+    }
+
+    @Override
+    public DrawableThing drawable(){
+        return new DrawableBot(color,dir);
     }
 }

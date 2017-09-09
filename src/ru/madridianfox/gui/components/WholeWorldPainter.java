@@ -1,5 +1,7 @@
 package ru.madridianfox.gui.components;
 
+import ru.madridianfox.gui.DrawSettings;
+import ru.madridianfox.gui.DrawableThing;
 import ru.madridianfox.world.CellInterface;
 import ru.madridianfox.world.things.Thing;
 import ru.madridianfox.world.World;
@@ -8,51 +10,40 @@ import javax.swing.*;
 import java.awt.*;
 
 public class WholeWorldPainter extends JPanel implements SubscriberInterface{
-    private static Color bkg = new Color(43, 43, 43);
-    private static Color lines = new Color(85, 85, 85);
 
-    private static int padding = 10;
-    private static int cell_size = 9;
-    private static int border = 1;
-
+    private DrawSettings settings = new DrawSettings(10,9,1, new Color(43, 43, 43), new Color(85, 85, 85));
     private World world;
-
-    private int cell_coord(int n){
-        return padding + border + (cell_size + border) * n;
-    }
 
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        int width = this.getWidth();
-        int height = this.getHeight();
+        int width = getWidth();
+        int height = getHeight();
         this.clear(g, width, height);
         if(this.world != null){
-            int field_width = this.cell_coord(this.world.width()+1) - border;
-            int field_height = this.cell_coord(this.world.height()+1) - border;
-            this.paintField(g, field_width, field_height);
-            this.paintCells(g);
+            int field_width = settings.fieldSizePixels(world.width());
+            int field_height = settings.fieldSizePixels(world.height());
+            paintField(g, field_width, field_height);
+            paintCells(g);
         }else{
-            g.setColor(lines);
+            g.setColor(settings.getLines());
             g.drawString("No world for drawing provided.", width/2, height/2);
         }
     }
 
     private void clear(Graphics g, int width, int height){
-        g.setColor(bkg);
+        g.setColor(settings.getBkg());
         g.clearRect(0,0, width, height);
         g.fillRect(0,0, width, height);
     }
 
-    private void paintField( Graphics g, int width, int height){
-        int w = width - padding;
-        int h = height - padding;
-        g.setColor(lines);
-        for(int x = padding; x <= w; x+=10){
-            g.drawLine(x, padding, x, h);
+    private void paintField(Graphics g, int width, int height){
+        g.setColor(settings.getLines());
+        for(int x = settings.getPadding(); x <= width; x+=10){
+            g.drawLine(x, settings.getPadding(), x, height);
         }
-        for(int y = padding; y <= h; y+=10){
-            g.drawLine(padding, y, w, y);
+        for(int y = settings.getPadding(); y <= height; y+=10){
+            g.drawLine(settings.getPadding(), y, width, y);
         }
     }
 
@@ -61,11 +52,8 @@ public class WholeWorldPainter extends JPanel implements SubscriberInterface{
             CellInterface[] column = this.world.cells[i];
             for(int j=0; j < column.length; j++){
                 Thing thing = column[j].thing();
-                int x = cell_coord(i),
-                    y = cell_coord(j);
-                int[] color = thing.color();
-                g.setColor(new Color(color[0],color[1],color[2]));
-                g.fillRect(x, y, cell_size, cell_size);
+                DrawableThing drawableThing = thing.drawable();
+                drawableThing.draw(g, settings, i, j);
             }
         }
     }
