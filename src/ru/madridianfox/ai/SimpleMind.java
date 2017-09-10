@@ -4,7 +4,7 @@ import ru.madridianfox.ai.sensors.Sensor;
 
 import java.util.Map;
 
-public class Mind {
+public class SimpleMind implements MindInterface {
     public String decide(Map<String, Sensor> sensors){
         String action = "mv";
         if(Math.random() > 0.9f){

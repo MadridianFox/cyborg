@@ -1,9 +1,14 @@
 package ru.madridianfox.ai.ann;
 
-public class Neuron implements NeuronInterface {
-    private DendriteInterface[] dendrites;
+import java.util.ArrayList;
+import java.util.List;
 
-    public Neuron(DendriteInterface[] dendrites){
+public class Neuron implements NeuronInterface {
+    private List<DendriteInterface> dendrites;
+    public Neuron(){
+        this(new ArrayList<>());
+    }
+    public Neuron(List<DendriteInterface> dendrites){
         this.dendrites = dendrites;
     }
     @Override
@@ -13,5 +18,10 @@ public class Neuron implements NeuronInterface {
             raw_signal += dendrite.signal();
         }
         return (float)(1.f / (1.f + Math.exp(-raw_signal)));
+    }
+
+    @Override
+    public void addDendrite(DendriteInterface dendrite) {
+        dendrites.add(dendrite);
     }
 }

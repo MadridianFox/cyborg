@@ -1,5 +1,9 @@
 package ru.madridianfox.world;
 
+import ru.madridianfox.ai.ann.WebInterface;
+
+import java.util.Random;
+
 public abstract class Sides {
     public static final Sides North = new NorthSide();
     public static final Sides West = new WestSide();
@@ -32,6 +36,17 @@ public abstract class Sides {
             case Right: return this.right();
         }
         return this;
+    }
+
+    public static Sides random() {
+        int rand = new Random().nextInt(4);
+        switch (rand){
+            case 0: return North;
+            case 1: return West;
+            case 2: return South;
+            case 3: return East;
+        }
+        return North;
     }
 
     public static class NorthSide extends Sides {

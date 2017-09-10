@@ -12,4 +12,7 @@ public class ConstNeuron implements NeuronInterface {
     public float axon() {
         return this.constant;
     }
+
+    @Override
+    public void addDendrite(DendriteInterface dendrite) {}
 }

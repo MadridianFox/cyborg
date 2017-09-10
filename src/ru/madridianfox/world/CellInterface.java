@@ -34,4 +34,6 @@ public interface CellInterface {
      * @return
      */
     World world();
+
+    CellInterface relativeCell(int i, int j);
 }

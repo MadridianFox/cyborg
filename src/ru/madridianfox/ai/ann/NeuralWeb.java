@@ -3,11 +3,11 @@ package ru.madridianfox.ai.ann;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractWeb implements WebInterface{
+public class NeuralWeb implements WebInterface{
     private Map<String, InputNeuronInterface> inputs;
     private Map<String, NeuronInterface> outputs;
 
-    protected AbstractWeb(Map<String, InputNeuronInterface> inputs, Map<String, NeuronInterface> outputs){
+    public NeuralWeb(Map<String, InputNeuronInterface> inputs, Map<String, NeuronInterface> outputs){
         this.inputs = inputs;
         this.outputs = outputs;
     }

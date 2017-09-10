@@ -3,7 +3,9 @@ package tests.ai;
 import org.junit.Test;
 import ru.madridianfox.ai.ann.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -16,11 +18,10 @@ public class AITest {
     }
     @Test
     public void neuronSignal(){
-        DendriteInterface[] dendrites = {
-                new ConstDendrite(0.2f),
-                new ConstDendrite(0.3f),
-                new ConstDendrite(0.4f)
-        };
+        List<DendriteInterface> dendrites = new ArrayList<>();
+        dendrites.add(new ConstDendrite(0.2f));
+        dendrites.add(new ConstDendrite(0.3f));
+        dendrites.add(new ConstDendrite(0.4f));
         NeuronInterface neuron = new Neuron(dendrites);
         float out = (float)(1 / (1 + Math.exp(-0.2f - 0.3f - 0.4f)));
         assertEquals(out, neuron.axon(), 0.001f);
@@ -46,7 +47,7 @@ public class AITest {
             outputs.put("out_"+i, new ConstNeuron(1.f/i));
         }
 
-        WebInterface web = new AbstractWeb(inputs, outputs) {
+        WebInterface web = new NeuralWeb(inputs, outputs) {
             @Override
             public Map<String, Float> decide(Map<String, Float> inputs) {
                 return super.decide(inputs);

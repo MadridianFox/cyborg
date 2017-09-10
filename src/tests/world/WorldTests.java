@@ -1,11 +1,15 @@
 package tests.world;
 
 import org.junit.Test;
+import ru.madridianfox.ai.SimpleMind;
+import ru.madridianfox.genome.Dna;
 import ru.madridianfox.gui.components.SubscriberInterface;
 import ru.madridianfox.world.CellInterface;
 import ru.madridianfox.world.Sides;
 import ru.madridianfox.world.World;
 import ru.madridianfox.world.things.Bot;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -51,7 +55,7 @@ public class WorldTests {
     class TestBot extends Bot {
         public int count_updates=0;
         public TestBot(CellInterface cell, Sides dir, int energy) {
-            super(cell, dir, energy);
+            super(new Dna(new ArrayList<>()),new SimpleMind(),new int[]{0,0,0});
         }
         @Override
         public void update(){

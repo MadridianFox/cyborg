@@ -1,6 +1,7 @@
 package ru.madridianfox.gui.pages;
 
 import ru.madridianfox.App;
+import ru.madridianfox.gui.components.StepCount;
 import ru.madridianfox.gui.components.WholeWorldPainter;
 
 import javax.swing.*;
@@ -14,6 +15,7 @@ public class MainPage implements PageInterface {
     private JButton btn_x1;
     private JButton btn_x10;
     private JButton btn_x100;
+    private StepCount stepCount1;
 
     public MainPage() {
         btn_stop.addMouseListener(new MouseAdapter() {
@@ -53,5 +55,8 @@ public class MainPage implements PageInterface {
 
     public WholeWorldPainter worldPainter(){
         return this.wholeWorldPainter;
+    }
+    public StepCount getStepCount1() {
+        return stepCount1;
     }
 }

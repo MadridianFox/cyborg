@@ -2,6 +2,9 @@ package ru.madridianfox.ai.ann;
 
 public class InputNeuron implements InputNeuronInterface {
     private float value;
+    public InputNeuron(){
+        this(0.f);
+    }
     public InputNeuron(float value){
         this.set(value);
     }
@@ -14,4 +17,7 @@ public class InputNeuron implements InputNeuronInterface {
     public float axon() {
         return this.value;
     }
+
+    @Override
+    public void addDendrite(DendriteInterface dendrite) {}
 }

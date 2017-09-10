@@ -66,7 +66,8 @@ public class World {
                     }
                 }
             }catch(Exception e){
-                System.out.println(e.getMessage());
+                System.out.println(e.getClass().getCanonicalName());
+                e.printStackTrace();
             }
 
         });

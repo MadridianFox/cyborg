@@ -12,10 +12,8 @@
     <children>
       <grid id="6fcd1" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="0">
         <constraints border-constraint="South"/>
-        <properties>
-          <background color="-12828863"/>
-        </properties>
-        <border type="etched">
+        <properties/>
+        <border type="none">
           <color color="-11842741"/>
         </border>
         <children>
@@ -42,6 +40,10 @@
             <properties>
               <text value="100x"/>
             </properties>
+          </component>
+          <component id="56ffa" class="ru.madridianfox.gui.components.StepCount" binding="stepCount1" default-binding="true">
+            <constraints/>
+            <properties/>
           </component>
         </children>
       </grid>

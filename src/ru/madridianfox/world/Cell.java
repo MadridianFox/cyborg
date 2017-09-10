@@ -38,4 +38,9 @@ public class Cell implements CellInterface{
     public World world() {
         return this.world;
     }
+
+    @Override
+    public CellInterface relativeCell(int i, int j) {
+        return world.cellByCoords(x+i, y+j);
+    }
 }
