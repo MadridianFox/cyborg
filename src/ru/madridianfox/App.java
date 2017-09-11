@@ -4,30 +4,56 @@ import ru.madridianfox.genome.Dna;
 import ru.madridianfox.genome.Gene;
 import ru.madridianfox.genome.NeuronGene;
 import ru.madridianfox.gui.pages.MainPage;
+import ru.madridianfox.gui.pages.StartPage;
 import ru.madridianfox.world.Sides;
 import ru.madridianfox.world.World;
 import ru.madridianfox.world.things.Bot;
 import ru.madridianfox.world.things.Rock;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.*;
 
 public class App {
     private JFrame window;
     private MainPage page;
+    private JMenuBar menu;
     public static App instance;
     public World world;
 
     public App(){
-        this.window = this.makeWindow();
-        this.world = makeWorld();
-        this.page = new MainPage();
-        this.window.setContentPane(this.page.mainPanel());
-        this.window.pack();
+        window = makeWindow();
+        menu = new JMenuBar();
+        StartPage page = new StartPage();
+        window.setContentPane(page.mainPanel());
+        makeMenu(menu);
+        window.setJMenuBar(menu);
+        window.pack();
+    }
 
-        this.world.addSubscriber(this.page.worldPainter());
-        world.addSubscriber(page.getStepCount1());
-        this.world.start();
+    private void makeMenu(JMenuBar menu) {
+        JMenu file_menu = new JMenu("File");
+        JMenuItem item_new = new JMenuItem("New");
+        file_menu.add(item_new);
+        item_new.addActionListener(e -> {
+            if(world != null){
+                world.stop();
+            }
+            world = makeWorld();
+            page = new MainPage();
+            window.setContentPane(page.mainPanel());
+            world.addSubscriber(page.worldPainter());
+            world.addSubscriber(page.getStepCount1());
+            world.start();
+            window.pack();
+        });
+
+        JMenuItem item_exit = new JMenuItem("Exit");
+        file_menu.add(item_exit);
+        item_exit.addActionListener(e -> System.exit(0));
+
+        menu.add(file_menu);
     }
 
     private World makeWorld(){

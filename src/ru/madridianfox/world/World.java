@@ -14,6 +14,7 @@ public class World {
     public CellInterface[][] cells;
     private Thread thread;
     private boolean go = false;
+    private boolean stop = false;
     private int steps_by_second = 1000;
     private List<SubscriberInterface> subscribers = new ArrayList<SubscriberInterface>();
     private List<Bot> bots = new CopyOnWriteArrayList<>();
@@ -59,7 +60,7 @@ public class World {
     public void start(){
         this.thread = new Thread(() -> {
             try{
-                while(true){
+                while(!stop){
                     Thread.sleep(1000 / steps_by_second);
                     if(go){
                         this.updateWorld();
@@ -112,5 +113,9 @@ public class World {
 
     public void kill(Bot bot) {
         this.bots.remove(bot);
+    }
+
+    public void stop() {
+        stop = true;
     }
 }
