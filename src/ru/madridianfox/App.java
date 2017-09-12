@@ -3,17 +3,14 @@ package ru.madridianfox;
 import ru.madridianfox.genome.Dna;
 import ru.madridianfox.genome.Gene;
 import ru.madridianfox.genome.NeuronGene;
+import ru.madridianfox.gui.WorldCreateDialog;
 import ru.madridianfox.gui.pages.MainPage;
 import ru.madridianfox.gui.pages.StartPage;
-import ru.madridianfox.world.Sides;
 import ru.madridianfox.world.World;
 import ru.madridianfox.world.things.Bot;
-import ru.madridianfox.world.things.Rock;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 
@@ -44,12 +41,16 @@ public class App {
             if(world != null){
                 world.stop();
             }
-            world = makeWorld(50,50);
-            page = new MainPage();
-            window.setContentPane(page.mainPanel());
-            world.addSubscriber(page.worldPainter());
-            world.addSubscriber(page.getStepCount1());
-            world.start();
+            WorldCreateDialog dialog = new WorldCreateDialog();
+            dialog.setVisible(true);
+            if(dialog.isOk()){
+                world = makeWorld(dialog.width(),dialog.height());
+                page = new MainPage();
+                window.setContentPane(page.mainPanel());
+                world.addSubscriber(page.worldPainter());
+                world.addSubscriber(page.getStepCount1());
+                world.start();
+            }
         });
 
         JMenuItem item_exit = new JMenuItem("Exit");
