@@ -33,7 +33,7 @@ public class Bot extends Thing {
     };
 
     private CellInterface cell;
-    private int energy = 100;
+    private int energy = 10;
     private Sides dir = Sides.North;
     private Dna dna;
     private int[] color;
@@ -186,6 +186,6 @@ public class Bot extends Thing {
 
     @Override
     public DrawableThing drawable(){
-        return new DrawableBot(color,dir);
+        return new DrawableBot(color,dir, energy);
     }
 }

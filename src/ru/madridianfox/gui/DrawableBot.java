@@ -6,12 +6,17 @@ import java.awt.*;
 
 public class DrawableBot extends DrawableSimple{
     private Sides dir;
-    public DrawableBot(int[] color, Sides dir) {
+    private int energy;
+    public DrawableBot(int[] color, Sides dir, int energy) {
         super(color);
         this.dir = dir;
+        this.energy = energy;
     }
     @Override
     public void draw(Graphics g, DrawSettings settings, int i, int j) {
+        if(settings.energy_mode){
+            setColor(settings.heatmapColor(energy));
+        }
         super.draw(g, settings, i, j);
         int x = settings.toPixels(i),
             y = settings.toPixels(j);

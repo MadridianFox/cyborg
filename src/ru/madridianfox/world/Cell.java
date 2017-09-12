@@ -6,15 +6,18 @@ public class Cell implements CellInterface{
     private Thing thing = Thing.noThing;
     private World world;
     private int x,y;
+    private int energy;
 
     public Cell(World world, int x, int y){
         this.world = world;
         this.x = x;
         this.y = y;
+        int e = 2 - (y * 4/world.height());
+        energy = e >= 0 ? e : 0;
     }
     @Override
     public Thing thing() {
-        return this.thing;
+        return thing;
     }
 
     @Override
@@ -25,18 +28,23 @@ public class Cell implements CellInterface{
 
     @Override
     public CellInterface cellByDirection(Sides dir) {
-        int[] coords = dir.vectorFrom(this.x, this.y);
-        return this.world.cellByCoords(coords[0], coords[1]);
-    }
-
-    @Override
-    public int[] color() {
-        return this.thing.color();
+        int[] coords = dir.vectorFrom(x, y);
+        return world.cellByCoords(coords[0], coords[1]);
     }
 
     @Override
     public World world() {
-        return this.world;
+        return world;
+    }
+
+    @Override
+    public int sunEnergy() {
+        return energy;
+    }
+
+    @Override
+    public int[] color() {
+        return new int[]{43+energy*40,43+energy*40,43};
     }
 
     @Override

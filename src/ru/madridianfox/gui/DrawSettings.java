@@ -10,6 +10,7 @@ public class DrawSettings {
     private int cell_size;
 
     private int border;
+    public boolean energy_mode = true;
 
     public DrawSettings(int padding, int cell_size, int border, Color bkg, Color lines){
         this.padding = padding;
@@ -37,6 +38,17 @@ public class DrawSettings {
 
     public int getBorder() {
         return border;
+    }
+
+    public int[] heatmapColor(int value){
+        float normalized = (float) (1 - 1 / (1+Math.exp((value-100)/25)));
+        int aR = 0;   int aG = 0; int aB=255;  // RGB for our 1st color (blue in this case).
+        int bR = 255; int bG = 0; int bB=0;    // RGB for our 2nd color (red in this case).
+
+        int red   = (int) ((float)(bR - aR) * normalized + aR);      // Evaluated as -255*value + 255.
+        int green = (int) ((float)(bG - aG) * normalized + aG);      // Evaluates as 0.
+        int blue  = (int) ((float)(bB - aB) * normalized + aB);      // Evaluates as 255*value + 0.
+        return new int[]{red,green,blue};
     }
 
     /**

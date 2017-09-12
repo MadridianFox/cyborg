@@ -14,4 +14,7 @@ public class DrawableSimple implements DrawableThing{
         g.setColor(new Color(color[0],color[1],color[2]));
         g.fillRect(x, y, settings.getCell_size(), settings.getCell_size());
     }
+    protected void setColor(int[] color){
+        this.color = color;
+    }
 }

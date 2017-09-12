@@ -44,7 +44,7 @@ public class App {
             if(world != null){
                 world.stop();
             }
-            world = makeWorld();
+            world = makeWorld(50,50);
             page = new MainPage();
             window.setContentPane(page.mainPanel());
             world.addSubscriber(page.worldPainter());
@@ -59,10 +59,10 @@ public class App {
         menu.add(file_menu);
     }
 
-    private World makeWorld(){
-        World world = new World(100,50);
+    private World makeWorld(int width, int height){
+        World world = new World(width,height);// max 190x94
         Random random = new Random();
-        for(int bot_number=0; bot_number<100; bot_number++){
+        for(int bot_number=0; bot_number<20; bot_number++){
             List<Gene> genes = new ArrayList<>();
             for(String output_key: Bot.output_names){
                 Map<String,Float> weights = new HashMap<>();
@@ -74,7 +74,7 @@ public class App {
             Dna dna = new Dna(genes);
             Bot bot = dna.makeOrganizm();
             world.addBot(bot);
-            bot.setCell(world.cellByCoords(random.nextInt(100), random.nextInt(50)));
+            bot.setCell(world.cellByCoords(random.nextInt(world.width()), random.nextInt(world.height())));
         }
         return world;
     }

@@ -17,6 +17,24 @@ public interface CellInterface {
     boolean setThing(Thing thing);
 
     /**
+     * Получить мир в котором стоит клетка
+     * @return мир
+     */
+    World world();
+
+    /**
+     * Получить енергию солнца от клетки
+     * @return количество енергии производимое клеткой
+     */
+    public int sunEnergy();
+
+    /**
+     * Получить цыет клетки
+     * @return массив целочисленных каналов r,g,b
+     */
+    public int[] color();
+
+    /**
      * Получить соседнюю клетку в указанном направлении
      * @param dir направлене
      * @return клетка
@@ -24,16 +42,10 @@ public interface CellInterface {
     CellInterface cellByDirection(Sides dir);
 
     /**
-     * Получить цвет клетки
-     * @return цвет ы ыиде массива из трёх int [255, 255, 255]
+     * Получить соседнюю клетку по относительным координатам
+     * @param i смещение по x
+     * @param j смезение по y
+     * @return клетка
      */
-    int[] color();
-
-    /**
-     * Получить мир в котором стоит клетка
-     * @return
-     */
-    World world();
-
     CellInterface relativeCell(int i, int j);
 }

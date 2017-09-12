@@ -1,6 +1,7 @@
 package ru.madridianfox.gui.components;
 
 import ru.madridianfox.gui.DrawSettings;
+import ru.madridianfox.gui.DrawableSimple;
 import ru.madridianfox.gui.DrawableThing;
 import ru.madridianfox.world.CellInterface;
 import ru.madridianfox.world.things.Thing;
@@ -52,7 +53,12 @@ public class WholeWorldPainter extends JPanel implements SubscriberInterface{
             CellInterface[] column = this.world.cells[i];
             for(int j=0; j < column.length; j++){
                 Thing thing = column[j].thing();
-                DrawableThing drawableThing = thing.drawable();
+                DrawableThing drawableThing;
+                if(thing != Thing.noThing){
+                    drawableThing = thing.drawable();
+                }else{
+                    drawableThing = new DrawableSimple(column[j].color());
+                }
                 drawableThing.draw(g, settings, i, j);
             }
         }
