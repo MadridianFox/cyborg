@@ -5,6 +5,7 @@ import ru.madridianfox.gui.components.StepCount;
 import ru.madridianfox.gui.components.WholeWorldPainter;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -18,6 +19,30 @@ public class MainPage implements PageInterface {
     private StepCount stepCount1;
 
     public MainPage() {
+        btn_stop = new JButton("Stop");
+        btn_x1 = new JButton("x1");
+        btn_x10 = new JButton("x10");
+        btn_x100 = new JButton("x100");
+        stepCount1 = new StepCount();
+
+        JPanel frame_for_buttons = new JPanel();
+        FlowLayout flow_layout = new FlowLayout();
+        flow_layout.setAlignment(FlowLayout.LEFT);
+        frame_for_buttons.setLayout(flow_layout);
+        frame_for_buttons.add(btn_stop);
+        frame_for_buttons.add(btn_x1);
+        frame_for_buttons.add(btn_x10);
+        frame_for_buttons.add(btn_x100);
+        frame_for_buttons.add(stepCount1);
+
+        wholeWorldPainter = new WholeWorldPainter();
+
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.add(wholeWorldPainter,BorderLayout.CENTER);
+        mainPanel.add(frame_for_buttons,BorderLayout.SOUTH);
+        //mainPanel.setSize(1000,500);
+
         btn_stop.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
