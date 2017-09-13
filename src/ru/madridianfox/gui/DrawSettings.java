@@ -10,7 +10,7 @@ public class DrawSettings {
     private int cell_size;
 
     private int border;
-    public boolean energy_mode = true;
+    public boolean energy_mode = false;
 
     public DrawSettings(int padding, int cell_size, int border, Color bkg, Color lines){
         this.padding = padding;
@@ -67,5 +67,9 @@ public class DrawSettings {
      */
     public int fieldSizePixels(int size){
         return (cell_size + border) * (size+1);
+    }
+
+    public int toIndex(int x) {
+        return (x - padding) / (cell_size+border);
     }
 }

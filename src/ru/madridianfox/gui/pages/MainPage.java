@@ -3,6 +3,7 @@ package ru.madridianfox.gui.pages;
 import ru.madridianfox.App;
 import ru.madridianfox.gui.components.StepCount;
 import ru.madridianfox.gui.components.WholeWorldPainter;
+import ru.madridianfox.world.World;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,13 +17,15 @@ public class MainPage implements PageInterface {
     private JButton btn_x1;
     private JButton btn_x10;
     private JButton btn_x100;
+    private JButton btn_toggle_energy;
     private StepCount stepCount1;
 
-    public MainPage() {
+    public MainPage(World world) {
         btn_stop = new JButton("Stop");
         btn_x1 = new JButton("x1");
         btn_x10 = new JButton("x10");
         btn_x100 = new JButton("x100");
+        btn_toggle_energy = new JButton("Energy");
         stepCount1 = new StepCount();
 
         JPanel frame_for_buttons = new JPanel();
@@ -33,9 +36,10 @@ public class MainPage implements PageInterface {
         frame_for_buttons.add(btn_x1);
         frame_for_buttons.add(btn_x10);
         frame_for_buttons.add(btn_x100);
+        frame_for_buttons.add(btn_toggle_energy);
         frame_for_buttons.add(stepCount1);
 
-        wholeWorldPainter = new WholeWorldPainter();
+        wholeWorldPainter = new WholeWorldPainter(world);
 
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -69,6 +73,13 @@ public class MainPage implements PageInterface {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 App.instance.world.simulationSpeed(100);
+            }
+        });
+        btn_toggle_energy.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                wholeWorldPainter.setToggleEnergy();
             }
         });
     }

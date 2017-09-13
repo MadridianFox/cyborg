@@ -9,11 +9,37 @@ import ru.madridianfox.world.World;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 
-public class WholeWorldPainter extends JPanel implements SubscriberInterface{
+public class WholeWorldPainter extends JPanel{
 
     private DrawSettings settings = new DrawSettings(10,9,1, new Color(43, 43, 43), new Color(85, 85, 85));
     private World world;
+    private int selected_cell_x;
+    private int selected_cell_y;
+    private boolean cell_under_mouse = false;
+
+    public WholeWorldPainter(World world) {
+        this.world = world;
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                super.mouseMoved(e);
+                int x = settings.toIndex(e.getX()),
+                    y = settings.toIndex(e.getY());
+                if(x > 0 && x < WholeWorldPainter.this.world.width() && y > 0 && y < WholeWorldPainter.this.world.height()){
+                    selected_cell_x = x;
+                    selected_cell_y = y;
+                    cell_under_mouse = true;
+                }else{
+                    cell_under_mouse = false;
+                }
+            }
+        });
+        Timer timer = new Timer(1000 / 20, e -> repaint());
+        timer.start();
+    }
 
     @Override
     public void paintComponent(Graphics g){
@@ -46,6 +72,10 @@ public class WholeWorldPainter extends JPanel implements SubscriberInterface{
         for(int y = settings.getPadding(); y <= height; y+=10){
             g.drawLine(settings.getPadding(), y, width, y);
         }
+        if(cell_under_mouse){
+            g.setColor(Color.green);
+            g.drawRect(settings.toPixels(selected_cell_x)-settings.getBorder(),settings.toPixels(selected_cell_y) - settings.getBorder(), 10,10);
+        }
     }
 
     private void paintCells(Graphics g){
@@ -64,9 +94,7 @@ public class WholeWorldPainter extends JPanel implements SubscriberInterface{
         }
     }
 
-    @Override
-    public void update(World world) {
-        this.world = world;
-        this.repaint();
+    public void setToggleEnergy() {
+        settings.energy_mode = !settings.energy_mode;
     }
 }

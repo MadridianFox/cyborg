@@ -72,11 +72,7 @@ public class World {
             }
 
         });
-        try{
-            this.thread.start();
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+        thread.start();
     }
 
     public void updateWorld(){

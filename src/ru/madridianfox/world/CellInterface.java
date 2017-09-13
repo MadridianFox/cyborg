@@ -26,13 +26,13 @@ public interface CellInterface {
      * Получить енергию солнца от клетки
      * @return количество енергии производимое клеткой
      */
-    public int sunEnergy();
+    int sunEnergy();
 
     /**
      * Получить цыет клетки
      * @return массив целочисленных каналов r,g,b
      */
-    public int[] color();
+    int[] color();
 
     /**
      * Получить соседнюю клетку в указанном направлении

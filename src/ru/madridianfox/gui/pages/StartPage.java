@@ -8,8 +8,8 @@ public class StartPage implements PageInterface{
 
     public StartPage() {
         main_panel = new JPanel();
-        main_panel.setLayout(new BorderLayout());
-        main_panel.add(new JLabel("Создаёте новый мир  через меню"), BorderLayout.CENTER);
+        main_panel.setLayout(new FlowLayout());
+        main_panel.add(new JLabel("Создайте новый мир через меню"));
     }
 
     @Override

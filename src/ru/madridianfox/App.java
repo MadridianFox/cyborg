@@ -45,9 +45,8 @@ public class App {
             dialog.setVisible(true);
             if(dialog.isOk()){
                 world = makeWorld(dialog.width(),dialog.height());
-                page = new MainPage();
+                page = new MainPage(world);
                 window.setContentPane(page.mainPanel());
-                world.addSubscriber(page.worldPainter());
                 world.addSubscriber(page.getStepCount1());
                 world.start();
             }
@@ -61,7 +60,7 @@ public class App {
     }
 
     private World makeWorld(int width, int height){
-        World world = new World(width,height);// max 190x94
+        World world = new World(width,height);
         Random random = new Random();
         for(int bot_number=0; bot_number<20; bot_number++){
             List<Gene> genes = new ArrayList<>();
