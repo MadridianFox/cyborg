@@ -1,13 +1,7 @@
 package tests.ai;
 
 import org.junit.Test;
-import ru.madridianfox.ai.sensors.EyeSensor;
 import ru.madridianfox.ai.sensors.Sensor;
-import ru.madridianfox.world.Sides;
-import ru.madridianfox.world.Turn;
-import ru.madridianfox.world.World;
-import ru.madridianfox.world.things.Bot;
-import ru.madridianfox.world.things.ColoredThing;
 
 import static org.junit.Assert.assertEquals;
 
@@ -57,7 +51,7 @@ public class SensorsTest {
 //                {Turn.Left, Turn.Left}, {Turn.Left, Turn.Left, Turn.Left},{Turn.Right, Turn.Right}
 //        };
 //
-//        World world = new World(3, 3);
+//        BotWorld world = new BotWorld(3, 3);
 //        Bot bot = new Bot(world.cellByCoords(1,1), Sides.North, 1000);
 //        for(int i=0; i < coords.length; i++){
 //            int x = coords[i][0],

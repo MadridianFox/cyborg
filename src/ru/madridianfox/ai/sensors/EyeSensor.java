@@ -5,12 +5,10 @@ import ru.madridianfox.world.Turn;
 import ru.madridianfox.world.things.Bot;
 
 public class EyeSensor extends Sensor {
-    private int chanell;
     private Turn[] turns;
     private Bot bot;
 
-    public EyeSensor(int chanell, Turn[] turns, Bot bot){
-        this.chanell = chanell;
+    public EyeSensor(Turn[] turns, Bot bot){
         this.turns = turns;
         this.bot = bot;
     }
@@ -22,6 +20,7 @@ public class EyeSensor extends Sensor {
     @Override
     protected int value() {
         CellInterface cell = bot.relativeCell(this.turns);
-        return cell.color()[this.chanell];
+        int[] color = cell.color();
+        return (color[0]+color[1]+color[2])/255;
     }
 }

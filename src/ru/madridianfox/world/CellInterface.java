@@ -20,7 +20,7 @@ public interface CellInterface {
      * Получить мир в котором стоит клетка
      * @return мир
      */
-    World world();
+    BotWorld world();
 
     /**
      * Получить енергию солнца от клетки

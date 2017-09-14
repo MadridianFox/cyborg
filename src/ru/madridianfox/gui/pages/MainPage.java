@@ -2,8 +2,8 @@ package ru.madridianfox.gui.pages;
 
 import ru.madridianfox.App;
 import ru.madridianfox.gui.components.StepCount;
-import ru.madridianfox.gui.components.WholeWorldPainter;
-import ru.madridianfox.world.World;
+import ru.madridianfox.gui.components.WorldPainter;
+import ru.madridianfox.world.AbstractWorld;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 
 public class MainPage implements PageInterface {
     private JPanel mainPanel;
-    private WholeWorldPainter wholeWorldPainter;
+    private WorldPainter wholeWorldPainter;
     private JButton btn_stop;
     private JButton btn_x1;
     private JButton btn_x10;
@@ -20,7 +20,7 @@ public class MainPage implements PageInterface {
     private JButton btn_toggle_energy;
     private StepCount stepCount1;
 
-    public MainPage(World world) {
+    public MainPage(AbstractWorld world, WorldPainter painter) {
         btn_stop = new JButton("Stop");
         btn_x1 = new JButton("x1");
         btn_x10 = new JButton("x10");
@@ -39,7 +39,7 @@ public class MainPage implements PageInterface {
         frame_for_buttons.add(btn_toggle_energy);
         frame_for_buttons.add(stepCount1);
 
-        wholeWorldPainter = new WholeWorldPainter(world);
+        wholeWorldPainter = painter;
 
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
@@ -58,21 +58,21 @@ public class MainPage implements PageInterface {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                App.instance.world.simulationSpeed(1);
+                App.instance.world.setSimulationSpeed(1);
             }
         });
         btn_x10.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                App.instance.world.simulationSpeed(10);
+                App.instance.world.setSimulationSpeed(10);
             }
         });
         btn_x100.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                App.instance.world.simulationSpeed(100);
+                App.instance.world.setSimulationSpeed(100);
             }
         });
         btn_toggle_energy.addMouseListener(new MouseAdapter() {
@@ -89,7 +89,7 @@ public class MainPage implements PageInterface {
         return mainPanel;
     }
 
-    public WholeWorldPainter worldPainter(){
+    public WorldPainter worldPainter(){
         return this.wholeWorldPainter;
     }
     public StepCount getStepCount1() {

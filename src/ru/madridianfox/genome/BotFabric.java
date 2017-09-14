@@ -33,14 +33,6 @@ public class BotFabric {
         inputs.put("ernl", new InputNeuron()); inputs.put("ern", new InputNeuron()); inputs.put("ernr", new InputNeuron());
         inputs.put("erl", new InputNeuron()); /*##################################*/ inputs.put("err", new InputNeuron());
         inputs.put("erll", new InputNeuron()); inputs.put("erlll", new InputNeuron());inputs.put("errr", new InputNeuron());
-        // green channel
-        inputs.put("egnl", new InputNeuron()); inputs.put("egn", new InputNeuron());inputs.put("egnr", new InputNeuron());
-        inputs.put("egl", new InputNeuron()); /*##################################*/ inputs.put("egr", new InputNeuron());
-        inputs.put("egll", new InputNeuron()); inputs.put("eglll", new InputNeuron());inputs.put("egrr", new InputNeuron());
-        // blue channel
-        inputs.put("ebnl", new InputNeuron()); inputs.put("ebn", new InputNeuron());inputs.put("ebnr", new InputNeuron());
-        inputs.put("ebl", new InputNeuron()); /*##################################*/ inputs.put("ebr", new InputNeuron());
-        inputs.put("ebll", new InputNeuron()); inputs.put("eblll", new InputNeuron());inputs.put("ebrr", new InputNeuron());
 
         for(String key: inputs.keySet()){
             neurons_data.put(key, new HashMap<>());
@@ -84,6 +76,6 @@ public class BotFabric {
 
     public Bot makeBot(Dna dna){
         MindInterface mind = new NeuralMind(makeWeb());
-        return new Bot(dna, mind, new int[]{55, 177, 88});
+        return new Bot(dna, mind, new int[]{0, 128, 128});
     }
 }

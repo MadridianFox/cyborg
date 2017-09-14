@@ -1,7 +1,7 @@
 package ru.madridianfox.gui.components;
 
-import ru.madridianfox.world.World;
+import ru.madridianfox.world.AbstractWorld;
 
 public interface SubscriberInterface {
-    void update(World world);
+    void update(AbstractWorld world);
 }

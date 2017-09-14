@@ -4,9 +4,10 @@ import org.junit.Test;
 import ru.madridianfox.ai.SimpleMind;
 import ru.madridianfox.genome.Dna;
 import ru.madridianfox.gui.components.SubscriberInterface;
+import ru.madridianfox.world.AbstractWorld;
+import ru.madridianfox.world.BotWorld;
 import ru.madridianfox.world.CellInterface;
 import ru.madridianfox.world.Sides;
-import ru.madridianfox.world.World;
 import ru.madridianfox.world.things.Bot;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 public class WorldTests {
     @Test
     public void constructorTest(){
-        World world = new World(3,2);
+        BotWorld world = new BotWorld(3,2);
         assertEquals(3, world.width());
         assertEquals(2, world.height());
         for(CellInterface[] column: world.cells){
@@ -28,17 +29,17 @@ public class WorldTests {
     }
 
     class TestSubscriber implements SubscriberInterface{
-        public World world;
+        public AbstractWorld world;
         public int count_updates = 0;
         @Override
-        public void update(World world) {
+        public void update(AbstractWorld world) {
             this.world = world;
             this.count_updates++;
         }
     }
     @Test
     public void subscriberOperations(){
-        World world = new World(3,2);
+        BotWorld world = new BotWorld(3,2);
         TestSubscriber subscriber = new TestSubscriber();
         world.addSubscriber(subscriber);
         assertEquals(1, subscriber.count_updates);
@@ -64,7 +65,7 @@ public class WorldTests {
     }
     @Test
     public void worldUpdating(){
-        World world = new World(3,2);
+        BotWorld world = new BotWorld(3,2);
         TestBot bot = new TestBot(world.cellByCoords(0,0), Sides.North, 1000);
         assertEquals(0, bot.count_updates);
 

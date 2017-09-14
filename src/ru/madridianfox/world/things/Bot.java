@@ -18,15 +18,7 @@ public class Bot extends Thing {
     public static final String[] input_names = new String[]{
             "ernl", "ern", "ernr",
             "erl",         "err",
-            "erll","erlll","errr",
-
-            "egnl", "egn", "egnr",
-            "egl",         "egr",
-            "egll","eglll","egrr",
-
-            "ebnl", "ebn", "ebnr",
-            "ebl",         "ebr",
-            "ebll","eblll","ebrr",
+            "erll","erlll","errr"
     };
     public static final String[] output_names = new String[]{
             "mv", "tr", "tl", "et", "bn"
@@ -39,6 +31,7 @@ public class Bot extends Thing {
     private int[] color;
     private MindInterface mind;
     private Map<String, Sensor> sensors;
+    private int age = 0;
 
     public Bot(Dna dna, MindInterface mind, int[] color){
         this.dna = dna;
@@ -47,61 +40,46 @@ public class Bot extends Thing {
         dir = Sides.random();
         this.sensors = new HashMap<>();
         // red channel
-        this.sensors.put("ernl", new EyeSensor(0, new Turn[]{Turn.NoTurn, Turn.Left},this));
-        this.sensors.put("ern", new EyeSensor(0, new Turn[]{Turn.NoTurn},this));
-        this.sensors.put("ernr", new EyeSensor(0, new Turn[]{Turn.NoTurn, Turn.Right},this));
+        this.sensors.put("ernl", new EyeSensor(new Turn[]{Turn.NoTurn, Turn.Left},this));
+        this.sensors.put("ern", new EyeSensor(new Turn[]{Turn.NoTurn},this));
+        this.sensors.put("ernr", new EyeSensor(new Turn[]{Turn.NoTurn, Turn.Right},this));
 
-        this.sensors.put("erl", new EyeSensor(0, new Turn[]{Turn.Left},this));
-        this.sensors.put("err", new EyeSensor(0, new Turn[]{Turn.Right},this));
+        this.sensors.put("erl", new EyeSensor(new Turn[]{Turn.Left},this));
+        this.sensors.put("err", new EyeSensor(new Turn[]{Turn.Right},this));
         
-        this.sensors.put("erll", new EyeSensor(0, new Turn[]{Turn.Left, Turn.Left},this));
-        this.sensors.put("erlll", new EyeSensor(0, new Turn[]{Turn.Left, Turn.Left, Turn.Left},this));
-        this.sensors.put("errr", new EyeSensor(0, new Turn[]{Turn.Right, Turn.Right},this));
-        // green channel
-        this.sensors.put("egnl", new EyeSensor(1, new Turn[]{Turn.NoTurn, Turn.Left},this));
-        this.sensors.put("egn", new EyeSensor(1, new Turn[]{Turn.NoTurn},this));
-        this.sensors.put("egnr", new EyeSensor(1, new Turn[]{Turn.NoTurn, Turn.Right},this));
-
-        this.sensors.put("egl", new EyeSensor(1, new Turn[]{Turn.Left},this));
-        this.sensors.put("egr", new EyeSensor(1, new Turn[]{Turn.Right},this));
-
-        this.sensors.put("egll", new EyeSensor(1, new Turn[]{Turn.Left, Turn.Left},this));
-        this.sensors.put("eglll", new EyeSensor(1, new Turn[]{Turn.Left, Turn.Left, Turn.Left},this));
-        this.sensors.put("egrr", new EyeSensor(1, new Turn[]{Turn.Right, Turn.Right},this));
-        // blue channel
-        this.sensors.put("ebnl", new EyeSensor(2, new Turn[]{Turn.NoTurn, Turn.Left},this));
-        this.sensors.put("ebn", new EyeSensor(2, new Turn[]{Turn.NoTurn},this));
-        this.sensors.put("ebnr", new EyeSensor(2, new Turn[]{Turn.NoTurn, Turn.Right},this));
-
-        this.sensors.put("ebl", new EyeSensor(2, new Turn[]{Turn.Left},this));
-        this.sensors.put("ebr", new EyeSensor(2, new Turn[]{Turn.Right},this));
-
-        this.sensors.put("ebll", new EyeSensor(2, new Turn[]{Turn.Left, Turn.Left},this));
-        this.sensors.put("eblll", new EyeSensor(2, new Turn[]{Turn.Left, Turn.Left, Turn.Left},this));
-        this.sensors.put("ebrr", new EyeSensor(2, new Turn[]{Turn.Right, Turn.Right},this));
+        this.sensors.put("erll", new EyeSensor(new Turn[]{Turn.Left, Turn.Left},this));
+        this.sensors.put("erlll", new EyeSensor(new Turn[]{Turn.Left, Turn.Left, Turn.Left},this));
+        this.sensors.put("errr", new EyeSensor(new Turn[]{Turn.Right, Turn.Right},this));
     }
 
     private void doAction(String action){
-        switch (action){
-            case "mv" : this.actionMove(); break;
-            case "tr" : this.actionTurn(Turn.Right); break;
-            case "tl" : this.actionTurn(Turn.Left); break;
-            case "et" : this.actionEat(); break;
-            case "bn" : this.actionBorn(); break;
+        actionSynt();
+        if(Math.random()<0.01){
+            actionBorn();
+        }else{
+            switch (action){
+                case "mv" : this.actionMove(); break;
+                case "tr" : this.actionTurn(Turn.Right); break;
+                case "tl" : this.actionTurn(Turn.Left); break;
+                case "et" : this.actionEat(); break;
+                case "bn" : this.actionBorn(); break;
+            }
         }
     }
 
+    private void actionSynt() {
+        energy += cell.sunEnergy();
+    }
+
     private void actionBorn() {
-        energy = energy/3;
-        Dna new_dna = dna.replicate();
-        Bot bot = new_dna.makeOrganizm();
-        cell.world().addBot(bot);
-        CellInterface free_cell = freeCellAround();
-        if(free_cell == null){
-            die();
-            bot.setCell(cell);
-        }else{
-            bot.setCell(free_cell);
+        if(energy >= 20) {
+            CellInterface free_cell = freeCellAround();
+            if (free_cell != null) {
+                Dna new_dna = dna.replicate();
+                Bot bot = new_dna.makeOrganizm();
+                cell.world().addBot(bot);
+                bot.setCell(free_cell);
+            }
         }
     }
 
@@ -123,6 +101,7 @@ public class Bot extends Thing {
     }
 
     private void actionEat() {
+        energy--;
         Thing thing = this.cell.cellByDirection(this.dir).thing();
         this.energy += thing.eat();
     }
@@ -135,6 +114,7 @@ public class Bot extends Thing {
     }
 
     private void actionMove() {
+        energy--;
         CellInterface new_cell = this.cell.cellByDirection(this.dir);
         if(new_cell.thing() == Thing.noThing){
             this.cell.setThing(Thing.noThing);
@@ -166,8 +146,8 @@ public class Bot extends Thing {
 
 
     public void update(){
-        energy--;
-        if(energy==0){
+        age++;
+        if(energy == 0 || age > 50){
             die();
         }else{
             this.doAction(this.mind.decide(this.sensors));
@@ -177,9 +157,13 @@ public class Bot extends Thing {
     public CellInterface relativeCell(Turn[] turns) {
         Sides dir = this.dir;
         CellInterface cell = this.cell;
-        for(Turn turn: turns){
-            dir = dir.byTurn(turn);
-            cell = cell.cellByDirection(dir);
+        try{
+            for(Turn turn: turns){
+                dir = dir.byTurn(turn);
+                cell = cell.cellByDirection(dir);
+            }
+        }catch(Exception e){
+            e.printStackTrace();
         }
         return cell;
     }

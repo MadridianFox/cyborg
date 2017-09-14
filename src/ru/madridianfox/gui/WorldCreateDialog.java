@@ -17,8 +17,8 @@ public class WorldCreateDialog extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        width_input.setValue(50);
-        height_input.setValue(50);
+        width_input.setValue(190);
+        height_input.setValue(94);
 
         width_input.addChangeListener(e -> {
             int value = (int)width_input.getValue();

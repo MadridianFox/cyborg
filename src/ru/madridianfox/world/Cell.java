@@ -4,11 +4,11 @@ import ru.madridianfox.world.things.Thing;
 
 public class Cell implements CellInterface{
     private Thing thing = Thing.noThing;
-    private World world;
+    private BotWorld world;
     private int x,y;
     private int energy;
 
-    public Cell(World world, int x, int y){
+    public Cell(BotWorld world, int x, int y){
         this.world = world;
         this.x = x;
         this.y = y;
@@ -33,7 +33,7 @@ public class Cell implements CellInterface{
     }
 
     @Override
-    public World world() {
+    public BotWorld world() {
         return world;
     }
 
